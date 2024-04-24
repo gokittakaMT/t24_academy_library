@@ -72,7 +72,7 @@ public class RentalManageController {
       List<Stock> stockList = this.stockService.findAll();
 
    // String attributeName;
-
+   model.addAttribute("rentalStatus", RentalStatus.values());
    model.addAttribute("accounts", accountList);
     model.addAttribute("stockList", stockList);
    
