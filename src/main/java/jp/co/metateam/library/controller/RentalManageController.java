@@ -68,7 +68,6 @@ public class RentalManageController {
     @GetMapping("/rental/add")
     public String add(Model model) {
 
-      List<RentalManage> RentalManageList = this.rentalManageService.findAll();
       List<Account> accountList = this.accountService.findAll();
       List<Stock> stockList = this.stockService.findAll();
 
