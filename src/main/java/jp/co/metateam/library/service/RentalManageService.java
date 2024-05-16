@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.metateam.library.model.Account;
+import jp.co.metateam.library.model.BookMst;
 import jp.co.metateam.library.model.RentalManage;
 import jp.co.metateam.library.model.RentalManageDto;
 import jp.co.metateam.library.model.Stock;
@@ -75,6 +76,41 @@ public class RentalManageService {
         }
     }
 
+    @Transactional 
+    public void update(long id, RentalManageDto rentalManageDto) throws Exception {
+        try {
+           
+            Account account = this.accountRepository.findByEmployeeId(rentalManageDto.getEmployeeId()).orElse(null);
+            if (account == null) {
+                throw new Exception("Account not found.");
+            }
+           
+            Stock stock = this.stockRepository.findById(rentalManageDto.getStockId()).orElse(null);
+            if (stock == null) {
+                throw new Exception("Stock not found.");
+            } 
+
+            RentalManage rentalManage = findById(id);
+            if(rentalManage == null){
+                throw new Exception("RentalManage not found.");
+            }
+
+            rentalManage.setId(rentalManageDto.getId());
+            rentalManage.setExpectedRentalOn(rentalManageDto.getExpectedRentalOn());
+            rentalManage.setExpectedReturnOn(rentalManageDto.getExpectedReturnOn());
+            rentalManage.setStatus(rentalManageDto.getStatus());
+            rentalManage.setStock(stock);
+            rentalManage.setAccount(account);
+
+            // データベースへの保存
+            this.rentalManageRepository.save(rentalManage);
+          //ここでrentalManageに保存しようとしているのに、上の98-103行目が全部rentalManageDto～();になっていた。これのせいで本来入れたい箱ではなく違う箱にデータを入れていた。
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+
     private RentalManage setRentalStatusDate(RentalManage rentalManage, Integer status) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         
@@ -87,5 +123,10 @@ public class RentalManageService {
         }
 
         return rentalManage;
+    }
+
+    public void update(Object rentalManageDto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }
