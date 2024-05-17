@@ -47,7 +47,8 @@ public class RentalManageDto {
 
     private Timestamp canceledAt;
 
-    private Stock stock;
+   // private Stock stock;
+    public Stock stock;
 
     private Account account;
 
@@ -84,6 +85,7 @@ public String ValidationComfirm(Integer preStatus){
     return null;
   
      }
+
 
 
 }
