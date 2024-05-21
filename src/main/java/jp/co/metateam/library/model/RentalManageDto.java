@@ -18,7 +18,7 @@ import lombok.Setter;
 /**
  * 貸出管理DTO
  */
-@Getter
+@Getter //この@Getterと@Setterなに？調べてもでてこない
 @Setter
 public class RentalManageDto {
 
@@ -26,6 +26,7 @@ public class RentalManageDto {
 
     @NotEmpty(message="在庫管理番号は必須です")
     private String stockId;
+    //privateでstockIdという名前のメンバ変数を定義している。
 
     @NotEmpty(message="社員番号は必須です")
     private String employeeId;
@@ -39,6 +40,7 @@ public class RentalManageDto {
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull(message="返却予定日は必須です")
+    
     private Date expectedReturnOn;
 
     private Timestamp rentaledAt;
@@ -50,16 +52,20 @@ public class RentalManageDto {
     private Stock stock;
 
     private Account account;
+      //private Long id;とかはメンバ変数を定義しているところ。
+    //privateなので他のクラスから値を代入したり取得したりできないが、setName()メソッドを加えることで
+    //他のクラスから関節的にメンバ変数へ値を設定することができる。
 
-    public void setBookMst(BookMst bookMst) {
+public void setBookMst(BookMst bookMst) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setBookMst'");
     }
 
 public String ValidationComfirm(Integer preStatus){
-    Date currentDate = new Date();
+    Date currentDate = new Date();//なんでこれインスタンス化したの？
    if(preStatus == RentalStatus.RENT_WAIT.getValue() && this.status == RentalStatus.RETURNED.getValue()){
       return "「 貸出待ち」から「返却済み」へ選択することはできません。";
+      //preStatusが貸出待ちかつRentalStatusが返却済みのとき、エラーを返す。
    } else if(preStatus == RentalStatus.RENTAlING.getValue() && this.status == RentalStatus.RENT_WAIT.getValue()){
       return "「貸出中」から「貸出待ち」へ選択することはできません。"; 
    } else if(preStatus == RentalStatus.RENTAlING.getValue() && this.status == RentalStatus.CANCELED.getValue()){
