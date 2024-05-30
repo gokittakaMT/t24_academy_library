@@ -49,7 +49,8 @@ public class RentalManageDto {
 
     private Timestamp canceledAt;
 
-    private Stock stock;
+   // private Stock stock;
+    public Stock stock;
 
     private Account account;
       //private Long id;とかはメンバ変数を定義しているところ。
@@ -90,6 +91,7 @@ public String ValidationComfirm(Integer preStatus){
     return null;
   
      }
+
 
 
 }

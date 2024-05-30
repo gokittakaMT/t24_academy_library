@@ -143,8 +143,5 @@ public class RentalManageService {
         return rentalManage;
     }
 
-    public void update(Object rentalManageDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+  
 }

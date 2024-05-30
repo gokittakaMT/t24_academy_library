@@ -58,10 +58,8 @@ public class RentalManageController {
     public String index(Model model) {
         // 貸出管理テーブルから全件取得
         List<RentalManage> rentalManageList = this.rentalManageService.findAll();
-        
         // 貸出一覧画面に渡すデータをmodelに追加
         model.addAttribute("rentalManageList", rentalManageList);
-       
         // 貸出一覧画面に遷移
         return "rental/index";
     }
@@ -72,19 +70,21 @@ public class RentalManageController {
      */
     @GetMapping("/rental/add") 
 
-    public String add(Model model) { 
+    public String add(Model model) { //String は戻り値の型。戻り値がなければvoidと記述。(ちなみにmainメソッドには戻り値がないので必ずvoidとなる。)
+     //ModelクラスはSpringの機能で、ControllerからView(画面)へ変数を渡すためのもの！
       List<Account> accountList = this.accountService.findAll(); 
-
+      //ここでは、アカウントオブジェクトのレコードを取得してaccountListというリストに格納している！
       List<Stock> stockList = this.stockService.findAll(); 
    // String attributeName; 
 
-   model.addAttribute("rentalStatus", RentalStatus.values()); 
-   model.addAttribute("accounts", accountList); 
+    model.addAttribute("rentalStatus", RentalStatus.values()); 
+    model.addAttribute("accounts", accountList); 
     model.addAttribute("stockList", stockList); 
 
     if (!model.containsAttribute("rentalManageDto")) { 
           model.addAttribute("rentalManageDto", new RentalManageDto()); 
         } 
+
       return "rental/add"; 
 
   } 
@@ -94,6 +94,7 @@ public class RentalManageController {
   public String save(@Valid @ModelAttribute RentalManageDto rentalManageDto, BindingResult result,RedirectAttributes ra) {
    
      try{
+
       if(result.hasErrors()){
        //      String message;
             throw new Exception("Validation error.");
@@ -155,8 +156,12 @@ public class RentalManageController {
   @PostMapping("/rental/{id}/edit")
   public String update(@PathVariable("id") String id, @Valid @ModelAttribute RentalManageDto rentalManageDto, BindingResult result, RedirectAttributes ra)throws Exception {
       try {
+ feature/rental/rental-check
    
           //エンティティのIDに基づいて変更前情報を取得
+
+          //変更前情報を取得
+ develop
           RentalManage rentalManage = this.rentalManageService.findById(Long.valueOf(id));
           //変更後のステータスを渡してDtoでバリデーションチェック
           String ValidationError = rentalManageDto.ValidationComfirm(rentalManage.getStatus());
@@ -164,8 +169,12 @@ public class RentalManageController {
           if(ValidationError != null){
               result.addError(new FieldError("rentalManage", "status", ValidationError));
           }
+ feature/rental/rental-check
    
           
+
+          //バリデーションエラーがあるかを判別。エラーあり：例外を投げる エラーなし：登録処理に移る
+ develop
           if (result.hasErrors()) {
               throw new Exception("Validation error.");
           }
@@ -178,7 +187,7 @@ public class RentalManageController {
    
           return "redirect:/rental/index";
       //エラーが発生すると入力したデータはDBに登録されずに編集画面に返す
-       } catch (Exception e) {
+         } catch (Exception e) {
            log.error(e.getMessage());
            
            ra.addFlashAttribute("rentalManage", rentalManageDto);
