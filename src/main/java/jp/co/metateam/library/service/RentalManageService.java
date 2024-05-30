@@ -47,6 +47,24 @@ public class RentalManageService {
         return this.rentalManageRepository.findById(id).orElse(null);
     }
 
+//     //ここから追加　part2
+
+    public List<RentalManage> findByStockIdAndStatusIn(String StockId){
+           List<RentalManage> rentalAvailable = this.rentalManageRepository.findByStockIdAndStatusIn(StockId);
+
+             return rentalAvailable;
+  
+    }
+
+    public List<RentalManage> findByStockIdAndStatusIn(String StockId, Long rentalId){
+           List<RentalManage> rentalAvailable = this.rentalManageRepository.findByStockIdAndStatusIn(StockId, rentalId);
+  
+              return rentalAvailable;
+
+ }
+
+
+    //ここから追加　part1
     @Transactional 
     public void save(RentalManageDto rentalManageDto) throws Exception {
         try {
