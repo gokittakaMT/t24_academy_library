@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{common :: meta_header('在庫カレンダー',~{::link},~{::script})}">
     <title th:text="${title}+' | MTLibrary'"></title>
     <link rel="stylesheet" th:href="@{/css/stock/calendar.css}" />
     <script type="text/javascript" th:src="@{/js/stock/add.js}"></script>
 </head>
+
 <body>
     <div class="contents">
         <div th:replace="~{common :: main_sidebar}"></div>
@@ -13,9 +15,13 @@
             <div class="inner_contens">
                 <div class="page_title">在庫カレンダー</div>
                 <div class="month_change mb30">
+                    <!--cssのmonth_changeの箇所でデザインされてる-->
                     <div><a th:href="@{/stock/calendar(year=2024,month=*{targetMonth-1})}">前月</a></div>
+                    <!--前月をクリックするとstock/calendarのこの月の処理を行う。-->
                     <div th:text="${targetYear + '年' + targetMonth + '月'}"></div>
                     <div><a th:href="@{/stock/calendar(year=2024,month=*{targetMonth+1})}">翌月</a></div>
+
+
                 </div>
 
                 <div class="table_wrapper">
@@ -29,16 +35,38 @@
                             <tr>
                                 <th class="header_book" rowspan="2">書籍名</th>
                                 <th class="header_stock" rowspan="2">在庫数</th>
-                                <th class="header_days" th:colspan="${daysInMonth}" th:text="${targetYear + '年' + targetMonth + '月'}"></th>
+                                <th class="header_days" th:colspan="${daysInMonth}"
+                                    th:text="${targetYear + '年' + targetMonth + '月'}"></th>
+                                <!--“colspan”属性は“th”要素が範囲とする表の列の数を指定してる。-->
                             </tr>
                             <tr class="days">
+                                <!-- trタグは表(テーブル)の一つ一つの行を表している。Table Rowの略。一つ一つのマス目は<td>タグであらわされる-->
                                 <th th:each="day : ${daysOfWeek}" th:text="${day}"></th>
+                                <!--この行で該当月の日付を表示。class="days" はCSSスタイルを適用するためのクラス名で、この行は曜日を表示するためのヘッダー行となる。
+                                 th:each="day : ${daysOfWeek}" はThymeleafの構文で、daysOfWeek という変数から値を取り出して day に格納している。
+                            th:text="${day}" はセル内に表示するテキストを day の値に設定している。-->
+
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <!-- FIXME ControllerやService側の処理とともに表示方法を考える -->
-                                <td th:each="stock, stat : ${stocks}" th:text="${stock}"></td>
+                        <tbody> <!--trは行　td(table data)は表(行)にデータを入れるための要素-->
+                            <!-- <tr th:each="stock,stat :${stocks}" th:object="${stock}">  一旦違うので試してみる-->
+                            <tr th:each="stock: ${stocks}">
+                                <td th:text="${stock.title}"></td>
+                                <!-- 書籍タイトルのtd -->
+                                <td th:text="${stock.stockCount}"></td>
+                                <!-- 利用可能在庫数のtd -->
+                                <th:block th:each="availableStockNum : ${stock.calendarDtoListPerDay}">
+                                    <!--availableStockNumに対してループを行う。blockでif文などを用いると、必要じゃないほうは表示させないように出来たりする。 -->
+                                    <th:block th:if="${availableStockNum.availableBookNum >= 1}">
+                                        <td><a th:href="@{/rental/add(stockId=${availableStockNum.stockId}, expectedRentalOn=${#dates.format(availableStockNum.expectedRentalOn, 'yyyy-MM-dd')})}"
+                                             th:text="${availableStockNum.availableBookNum}"></td>
+                                        <!-- 貸出可能在庫数のtd 　ifを用いて在庫数が1以上の場合その値のリンクを表示、0であれば✕を表示する -->
+                                    </th:block>
+                                    <th:block th:if="${availableStockNum.availableBookNum == 0}">
+                                        <td>x</td>
+
+                                    </th:block>
+                                </th:block>
                             </tr>
                         </tbody>
                     </table>
@@ -47,4 +75,5 @@
         </div>
     </div>
     <div th:replace="~{common :: footer}"></div>
+    <!--これは一番下に会社名を表示させるための文-->
 </body>

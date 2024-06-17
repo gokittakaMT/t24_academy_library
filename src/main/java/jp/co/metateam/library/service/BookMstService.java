@@ -37,6 +37,7 @@ public class BookMstService {
     public Optional<BookMst> findById(Long id) {
         return this.bookMstRepository.findById(id);
     }
+  
     
     public List<BookMstDto> findAvailableWithStockCount() {
         List<BookMst> books = this.bookMstRepository.findAll();
@@ -45,6 +46,7 @@ public class BookMstService {
         // 書籍の在庫数を取得
         // FIXME: 現状は書籍ID毎にDBに問い合わせている。一度のSQLで完了させたい。
         for (int i = 0; i < books.size(); i++) {
+            //size()はListやsetの要素数を取得することができる。
             BookMst book = books.get(i);
             List<Stock> stockCount = this.stockRepository.findByBookMstIdAndStatus(book.getId(), Constants.STOCK_AVAILABLE);
             BookMstDto bookMstDto = new BookMstDto();
@@ -54,6 +56,7 @@ public class BookMstService {
             bookMstDto.setStockCount(stockCount.size());
             bookMstDtoList.add(bookMstDto);
         }
+
 
         return bookMstDtoList;
     }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import jp.co.metateam.library.model.BookMst;
+import jp.co.metateam.library.model.BookMstDto;
+import jp.co.metateam.library.model.CalendarDto;
+import jp.co.metateam.library.model.RentalManage;
 import jp.co.metateam.library.model.Stock;
 import jp.co.metateam.library.model.StockDto;
 import jp.co.metateam.library.service.BookMstService;
@@ -41,7 +45,7 @@ public class StockController {
 
     @GetMapping("/stock/index")
     public String index(Model model) {
-        List <Stock> stockList = this.stockService.findAll();
+        List<Stock> stockList = this.stockService.findAll();
 
         model.addAttribute("stockList", stockList);
 
@@ -113,7 +117,8 @@ public class StockController {
     }
 
     @PostMapping("/stock/{id}/edit")
-    public String update(@PathVariable("id") String id, @Valid @ModelAttribute StockDto stockDto, BindingResult result, RedirectAttributes ra) {
+    public String update(@PathVariable("id") String id, @Valid @ModelAttribute StockDto stockDto, BindingResult result,
+            RedirectAttributes ra) {
         try {
             if (result.hasErrors()) {
                 throw new Exception("Validation error.");
@@ -133,24 +138,32 @@ public class StockController {
     }
 
     @GetMapping("/stock/calendar")
-    public String calendar(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month, Model model) {
+
+    public String calendar(@RequestParam(required = false) Integer year, @RequestParam(required = false) Integer month,
+            Model model) {
+        // @RequestParamはブラウザからのリクエスト値(パラメータ)を取得することができるアノテーション。リクエストで送らてきた日付とかをmonthとかyearに代入して${targetyear}とかに入れて表示させている。
 
         LocalDate today = year == null || month == null ? LocalDate.now() : LocalDate.of(year, month, 1);
         Integer targetYear = year == null ? today.getYear() : year;
+        // yearがnullの場合、today.getyear()の値をtargetyearに代入し、そうでない場合はyearの値を代入。
+        // today.getYear()は現在の日付から年を取得するメソッド。
         Integer targetMonth = today.getMonthValue();
 
         LocalDate startDate = LocalDate.of(targetYear, targetMonth, 1);
         Integer daysInMonth = startDate.lengthOfMonth();
 
         List<Object> daysOfWeek = this.stockService.generateDaysOfWeek(targetYear, targetMonth, startDate, daysInMonth);
-        List<String> stocks = this.stockService.generateValues(targetYear, targetMonth, daysInMonth);
+        // ★ここで在庫カレンダーの日付を全て表示させるのをHTMLに送れる。引数のtargetYear,targetMonthとかを飛ぶ先のメソッドに渡して処理
+
+        List<CalendarDto> stocks = this.stockService.generateValues(targetYear, targetMonth, daysInMonth);
+        // 書籍名、利用可能在庫数、貸出可能在庫数の表示のためのListが格納されている
 
         model.addAttribute("targetYear", targetYear);
         model.addAttribute("targetMonth", targetMonth);
         model.addAttribute("daysOfWeek", daysOfWeek);
         model.addAttribute("daysInMonth", daysInMonth);
-
         model.addAttribute("stocks", stocks);
+    
 
         return "stock/calendar";
     }

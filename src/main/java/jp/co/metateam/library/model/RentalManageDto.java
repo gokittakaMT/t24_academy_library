@@ -87,7 +87,11 @@ public String ValidationComfirm(Integer preStatus){
         return "貸出ステータスが貸出中の時、未来の日付を貸出予定日として選択することはできません";
     }else if(status == RentalStatus.RETURNED.getValue() && expectedReturnOn.after(currentDate)){
         return "貸出ステータスが返却済みの時、未来の日付を返却予定日として選択することはできません";
+    }else if(status == RentalStatus.RENTAlING.getValue() && expectedRentalOn.before(currentDate)){
+        return "貸出予定日は現在日時よりも後の日付を入力してください。";
+
     }
+
     return null;
   
      }

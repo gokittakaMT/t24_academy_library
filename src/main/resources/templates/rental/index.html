@@ -29,6 +29,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="rentalManage : ${rentalManageList}" th:object="${rentalManage}">
+                            <!--${rentalManage}の情報をrentamManageに追加している(?)-->
                             <td>
                                 <div class="manage_item_menu">
                                     <div><a th:href="@{/rental/{id}/edit(id=*{id})}"><img src="../images/icons/edit.png" alt="edit"/></a></div>
@@ -37,9 +38,11 @@
                             </td>
                             <td>
                                 <div th:text="*{stock.bookMst.title}"></div>
+                                <!--書籍名の表示をしている。-->
                             </td>
                             <td>
                                 <div th:text="*{stock.id}"></div>
+                                <!--在庫管理番号の表示をしている。-->
                             </td>
                             <td th:switch="*{status}">
                                 <div th:case=0 th:text="貸出待ち"></div>

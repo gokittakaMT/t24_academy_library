@@ -38,7 +38,7 @@ public class RentalManageService {
     @Transactional
     public List <RentalManage> findAll() {
         List <RentalManage> rentalManageList = this.rentalManageRepository.findAll();
-
+    //貸出一覧
         return rentalManageList;
     }
 
@@ -50,8 +50,9 @@ public class RentalManageService {
 //     //ここから追加　part2
 
     public List<RentalManage> findByStockIdAndStatusIn(String StockId){
-           List<RentalManage> rentalAvailable = this.rentalManageRepository.findByStockIdAndStatusIn(StockId);
-
+        //Listに格納するためのデータを取得するためのメソッド。戻り値の行先としてRentalManageControllerの205行目あたりのListへ
+        List<RentalManage> rentalAvailable = this.rentalManageRepository.findByStockIdAndStatusIn(StockId);
+           // List<RentalManage> findByStockIdAndStatusIn(String StockId);
              return rentalAvailable;
   
     }
