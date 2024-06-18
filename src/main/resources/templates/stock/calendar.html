@@ -49,7 +49,7 @@
                             </tr>
                         </thead>
                         <tbody> <!--trは行　td(table data)は表(行)にデータを入れるための要素-->
-                            <!-- <tr th:each="stock,stat :${stocks}" th:object="${stock}">  一旦違うので試してみる-->
+
                             <tr th:each="stock: ${stocks}">
                                 <td th:text="${stock.title}"></td>
                                 <!-- 書籍タイトルのtd -->
@@ -59,7 +59,7 @@
                                     <!--availableStockNumに対してループを行う。blockでif文などを用いると、必要じゃないほうは表示させないように出来たりする。 -->
                                     <th:block th:if="${availableStockNum.availableBookNum >= 1}">
                                         <td><a th:href="@{/rental/add(stockId=${availableStockNum.stockId}, expectedRentalOn=${#dates.format(availableStockNum.expectedRentalOn, 'yyyy-MM-dd')})}"
-                                             th:text="${availableStockNum.availableBookNum}"></td>
+                                                th:text="${availableStockNum.availableBookNum}"></td>
                                         <!-- 貸出可能在庫数のtd 　ifを用いて在庫数が1以上の場合その値のリンクを表示、0であれば✕を表示する -->
                                     </th:block>
                                     <th:block th:if="${availableStockNum.availableBookNum == 0}">

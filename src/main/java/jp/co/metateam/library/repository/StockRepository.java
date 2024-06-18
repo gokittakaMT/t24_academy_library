@@ -27,17 +27,6 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
     // 在庫カレンダー用の追加↴
 
-    // @Query(value = " select m.title from BookMst m ") // select title from
-    // book_mst;
-    // List<String> findByTitle(); // 書籍名取得
-
-    // @Query(value = "SELECT COUNT(*) AS book_count from Stock m GROUP BY
-    // m.bookMst.id")
-    // List<String> findByBookNumber();//書籍名ごとの在庫数
-
-    // @Query(value = "SELECT COUNT(*) AS book_count,title FROM stocks JOIN book_mst ON stocks.book_id = book_mst.id GROUP BY book_id", nativeQuery = true)
-    // List<Object[]> titleAndBookNumbers(); // それぞれの書籍名に対する在庫数と書籍名の取得
-
     @Query("SELECT s.bookMst.title, COUNT(s) FROM Stock s JOIN s.bookMst WHERE s.status = 0 GROUP BY s.bookMst.title")
     List<Object[]> countByLendableBook();
 

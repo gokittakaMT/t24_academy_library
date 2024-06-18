@@ -111,14 +111,11 @@ public class StockService {
     }
     // 【Values 在庫数、書籍名、貸出可能数のほう！】
 
-    // public List<String> generateValues(Integer year, Integer month, Integer
-    // daysInMonth) {
     public List<CalendarDto> generateValues(Integer year, Integer month, Integer daysInMonth) {
 
         // FIXME ここで各書籍毎の日々の在庫を生成する処理を実装する
         // FIXME ランダムに値を返却するサンプルを実装している
 
-        // List<String> values = new ArrayList<>();
         List<Object[]> countByAvailableBooks = this.stockRepository.countByLendableBook();
         List<CalendarDto> wholeValue = new ArrayList<>();
         // インスタンス化。最終的に戻り値としてwholeValueにこのメソッドで使う全てのListが格納される。
