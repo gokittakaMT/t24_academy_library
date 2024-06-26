@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.metateam.library.model.RentalManage;
 
-@Repository
+@Repository//MVCのどれに該当するかを記述
 public interface RentalManageRepository extends JpaRepository<RentalManage, Long> {
     List<RentalManage> findAll();
 

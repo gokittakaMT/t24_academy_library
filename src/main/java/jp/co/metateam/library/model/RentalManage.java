@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "RentalManage")
+//貸出一覧などで必要なデータを取得している場所(?)
 public class RentalManage {
 
     @Id

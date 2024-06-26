@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{common :: meta_header('在庫一覧',~{::link},~{::script})}">
     <title th:text="${title}+' | MTLibrary'"></title>
     <link rel="stylesheet" th:href="@{/css/stock/index.css}" />
     <script type="text/javascript" th:src="@{/js/stock/index.js}"></script>
 </head>
+
 <body>
     <div class="contents">
         <div th:replace="~{common :: main_sidebar}"></div>
@@ -14,7 +16,7 @@
                 <div class="page_title">在庫一覧</div>
                 <div class="add_btn">
                     <a th:href="@{/stock/add}">
-                        <span><img src="../images/icons/add.png" alt="add"/></span>
+                        <span><img src="../images/icons/add.png" alt="add" /></span>
                         <span>在庫登録</span>
                     </a>
                 </div>
@@ -31,17 +33,29 @@
                         <tr th:each="stock : ${stockList}" th:object="${stock}">
                             <td>
                                 <div class="stock_item_menu">
-                                    <div><a th:href="@{/stock/{id}/edit(id=*{id})}"><img src="../images/icons/edit.png" alt="edit"/></a></div>
-                                    <div><a href="#" class="" onClick="openDeleteModal()"><img src="../images/icons/trash.png" alt="trash"/></a></div>
+                                    <div><a th:href="@{/stock/{id}/edit(id=*{id})}"><img src="../images/icons/edit.png"
+                                                alt="edit" /></a></div>
+                                                <!--ペンマーク押したときの遷移先とその画像-->
+                                    <div><a href="#" class="" onClick="openDeleteModal()"><img
+                                                src="../images/icons/trash.png" alt="trash" /></a></div>
+                                                <!--ゴミボタン押したときの処理とその画像-->
                                     <div><a th:href="@{/stock/{id}(id=*{id})}" th:text="*{id}"></a></div>
+                                    <!--idのセット-->
                                 </div>
                             </td>
                             <td th:text="*{bookMst.title}"></td>
-                            <td th:text="${stock.status == 0 && (#lists.isEmpty(stock.rentalManages) || stock.rentalManages[0].status != 1) ? '利用可' : '利用不可'}"></td>
+                            <!--書籍名のセット-->
+                            <td
+                                th:text="${stock.status == 0 && (#lists.isEmpty(stock.rentalManages) || stock.rentalManages[0].status != 1) ? '利用可' : '利用不可'}">
+                            </td>
+                            <!--在庫ステータスのセット-->
                             <td>
                                 <div th:if="${not #lists.isEmpty(stock.rentalManages)}">
                                     <div th:text="${'利用者：' + stock.rentalManages[0].account.name}"></div>
-                                    <div th:text="${'返却予定日：' + #dates.format(stock.rentalManages[0].expectedReturnOn, ('yyyy/MM/dd'))}"></div>
+                                    <div
+                                        th:text="${'返却予定日：' + #dates.format(stock.rentalManages[0].expectedReturnOn, ('yyyy/MM/dd'))}">
+                                    </div>
+                                    <!--貸出情報のセット-->
                                 </div>
                             </td>
                         </tr>
