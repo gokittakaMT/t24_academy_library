@@ -23,6 +23,8 @@ public class BookMst {
     @Column(name = "id")
     private Long id;
 
+    //  @Column(name = "book_id")
+    //  private Long bookId;//review機能で追加
     /** ISBN */
     @Column(name = "isbn", nullable = false, unique = true)
     private String isbn;
@@ -41,19 +43,19 @@ public class BookMst {
     /** Getters */
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public String getIsbn() {
-        return this.isbn;
+        return isbn;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     public Timestamp getDeletedAt() {
-        return this.deletedAt;
+        return deletedAt;
     }
 
     /** Setters */

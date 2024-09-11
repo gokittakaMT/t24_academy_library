@@ -21,12 +21,10 @@ import jp.co.metateam.library.model.Account;
 import jp.co.metateam.library.model.RentalManage;
 import jp.co.metateam.library.model.RentalManageDto;
 import jp.co.metateam.library.model.Stock;
-import jp.co.metateam.library.model.StockDto;
 import jp.co.metateam.library.service.AccountService;
 import jp.co.metateam.library.service.RentalManageService;
 import jp.co.metateam.library.service.StockService;
 import jp.co.metateam.library.values.RentalStatus;
-import jp.co.metateam.library.constants.Constants;
 import lombok.extern.log4j.Log4j2;
 //ステータス表示のため
 

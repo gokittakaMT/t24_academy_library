@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common :: meta_header('口コミ書籍一覧',~{::link},~{::script})}">
+    <title th:text="${title}+' | MTLibrary'"></title>
+    <link rel="stylesheet" th:href="@{/css/stock/review.css}" />
+    <script type="text/javascript" th:src="@{/js/book/index.js}"></script>
+    <!-- jsの方はどの機能も空っぽのことが多いので実質いらなそう。 -->
+</head>
+
+<body>
+    <div class="contents">
+        <div th:replace="~{common :: main_sidebar}"></div>
+        <div class="main_contents">
+            <div th:replace="~{common :: header}"></div>
+            <div class="inner_contens">
+                <div class="page_title">口コミ書籍一覧</div>
+                <div class="page_contents">
+                    <table class="books_table" align="left">
+                        <tr>
+                            <th>書籍名</th>
+                            <th>口コミ件数</th>
+                        </tr>
+
+                        <tr th:each="reviewMst : ${reviewMstList}">
+                            <td>
+                                <a th:href="@{/review/{bookId}/detail(bookId=${reviewMst.bookId})}" th:text="${reviewMst.bookTitle}"></a>
+                            </td>
+                            <td th:text="${reviewMst.reviewCount}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{common :: footer}"></div>
+</body>

@@ -35,4 +35,8 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM rental_manage rm INNER JOIN stocks s ON rm.stock_id = s.id INNER JOIN book_mst bm ON s.book_id = bm.id WHERE bm.title=?1  AND (rm.expected_rental_on <= ?2 AND rm.expected_return_on >= ?2)", nativeQuery = true)
     Long countByrentaledBook(String title, java.util.Date specifiedDate);
+
+   @Query(value = "SELECT b.title AS book_title, COUNT(r.id) AS count_reviews FROM review_mst r JOIN book_mst b ON r.book_id= b.id GROUP BY b.id,b.isbn, b.title ORDER BY b.id;", nativeQuery = true)
+   List<String> reviewList(String title);
+
 }

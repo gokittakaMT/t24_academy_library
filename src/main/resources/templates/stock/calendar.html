@@ -37,7 +37,8 @@
                                 <th class="header_stock" rowspan="2">在庫数</th>
                                 <th class="header_days" th:colspan="${daysInMonth}"
                                     th:text="${targetYear + '年' + targetMonth + '月'}"></th>
-                                <!--“colspan”属性は“th”要素が範囲とする表の列の数を指定してる。-->
+                                <!--“colspan”属性は表における垂直方向のセルの結合数を指定する。書籍名なら2行分結合してるね。
+                                また、colspanはコラム(欄)の数を指定していて、この場合はその月の日付分(31個とか)が指定されている。-->
                             </tr>
                             <tr class="days">
                                 <!-- trタグは表(テーブル)の一つ一つの行を表している。Table Rowの略。一つ一つのマス目は<td>タグであらわされる-->

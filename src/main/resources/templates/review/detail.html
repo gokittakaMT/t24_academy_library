@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common :: meta_header('口コミ詳細',~{::link},~{::script})}">
+    <title th:text="${title}+' | MTLibrary'"></title>
+    <link rel="stylesheet" th:href="@{/css/stock/reviewDetail.css}" />
+    <script type="text/javascript" th:src="@{/js/book/index.js}"></script>
+    <!-- jsの方はどの機能も空っぽのことが多いので実質いらなそう。 -->
+</head>
+
+<body>
+    <div class="contents">
+        <div th:replace="~{common :: main_sidebar}"></div>
+        <div class="main_contents">
+            <div th:replace="~{common :: header}"></div>
+            <div class="inner_contens">
+                <div class="page_title">口コミ詳細</div>
+                <H1 th:text="${reviewMstList[0].title}"></H1>
+                <span class="return-link">
+                    <a th:href="@{/review/index}" class="link">← 一覧へ戻る</a>
+                </span>
+                <div class="page_contents">
+                    <table class="books_table" align="left">
+                        <tr>
+                            <th>口コミ</th>
+                        </tr>
+
+                        <tr th:each="reviewMst : ${reviewMstList}">
+                            <td th:text="${reviewMst.review}"></td>
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+            <form id="books_review_form" th:object="${reviewMstDto}"
+                th:action="@{/review/{bookId}/detail(bookId=${reviewMstList[0].bookId})}" method="post">
+                <div class="mb30" align="left">
+                     <!-- mbはcssの方で余白を設定している  -->
+                    <label for="review" style="margin-left: 100px;">口コミ入力欄<span
+                            class="text-red asterisk">＊</span></label>
+                    <input class="form_input" type="text" id="review" name="review" th:field="*{review}" placeholder="レビューを入力" />
+                    <div th:if="${#fields.hasErrors('review')}" th:errors="*{review}" style="color: red; margin-left: 85px;"></div>
+                </div>
+                <div class="btn_block">
+                    <button type="submit" id="submit_btn">登録</button> 
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{common :: footer}"></div>
+</body>

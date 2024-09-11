@@ -37,6 +37,7 @@
                         <label for="price">購入金額</label>
                         <input type="number" id="price" class="form_input" name="price" min="0" th:value="*{price}"
                             placeholder="購入金額を入力">
+                            <!-- value=^^はそこで表示させるやつ -->
                         <div class="error_msg" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
                     </div>
                     <div class="mb30">

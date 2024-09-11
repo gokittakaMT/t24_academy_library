@@ -24,11 +24,14 @@
                             </span>
                         </div>
                         <div class="mb30">
+                            <!-- mbはcssの方で余白を設定している -->
                             <label for="title">書籍名<span class="text-red asterisk">＊</span></label>
                             <input class="form_input" type="text" id="title" name="title" placeholder="書籍名を入力"
                                 th:value="*{title}" />
+                                <!-- class="form_input"はCSSのそれを参照している -->
                             <div class="error_msg" th:if="${errTitle}">
                               <p th:text="${errTitle}" style="color: red"></p>
+                              <!-- このエラーについての記述をreviewのHTMLにも記述する。 -->
                             </div>
                         </div>
                         <div class="mb30">

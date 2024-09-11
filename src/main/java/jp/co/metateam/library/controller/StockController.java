@@ -163,8 +163,8 @@ public class StockController {
         model.addAttribute("daysOfWeek", daysOfWeek);
         model.addAttribute("daysInMonth", daysInMonth);
         model.addAttribute("stocks", stocks);
-    
 
         return "stock/calendar";
     }
+
 }

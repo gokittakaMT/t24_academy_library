@@ -12,4 +12,7 @@ public interface BookMstRepository extends JpaRepository<BookMst, Long> {
 	List<BookMst> findAll();
 
 	Optional<BookMst> findById(BigInteger id);
+
+	Optional<BookMst> findByTitle(String title);//レビューのために追加(口コミ詳細の画面表示のため)
+
 }

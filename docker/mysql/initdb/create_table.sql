@@ -66,3 +66,16 @@ CREATE TABLE IF NOT EXISTS mt_library.rental_manage
 )
 COMMENT = '貸出管理'
 ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS mt_library.review_mst
+(
+    id bigint NOT NULL AUTO_INCREMENT comment '口コミマスタID',
+    review varchar(900) NOT NULL comment '口コミ',
+    book_id bigint NOT NULL comment '書籍ID',
+    created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (book_id) REFERENCES book_mst (id)
+) 
+COMMENT = '口コミマスタ'
+ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

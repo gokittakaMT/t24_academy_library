@@ -15,6 +15,7 @@ import jp.co.metateam.library.constants.Constants;
 import jp.co.metateam.library.model.BookMst;
 import jp.co.metateam.library.model.CalendarDto;
 import jp.co.metateam.library.model.DateCalendarDto;
+import jp.co.metateam.library.model.ReviewMstDto;
 import jp.co.metateam.library.model.Stock;
 import jp.co.metateam.library.model.StockDto;
 import jp.co.metateam.library.repository.BookMstRepository;
@@ -164,4 +165,35 @@ public class StockService {
         return wholeValue;
 
     }
+
+    // public List<ReviewMstDto> reviewValues() {
+    //     List<ReviewMst> reviews = this.stockRepository.findAll();
+    //     List<ReviewMstDto> reviewMstDtoList = new ArrayList<ReviewMstDto>();
+
+    //     // 書籍名をリストに追加する
+    //     // bookNames.add("花丸伝説");
+    //     // bookNames.add("卵ポーロ");
+    //     // bookNames.add("1984");
+    //     // bookNames.add("Pride and Prejudice");
+    //     // bookNames.add("どこへ行った西園寺");
+
+    //     return bookNames;
+
+    // }
+
+    public List<String> reviewDetailValues() {
+
+        List<String> bookreviews = new ArrayList<>();
+
+        // 書籍名をリストに追加する
+        bookreviews.add("おもろい");
+        bookreviews.add("サイコー");
+        bookreviews.add("1984");
+        bookreviews.add("insaine");
+        bookreviews.add("さいあく");
+
+        return bookreviews;
+
+    }
+
 }

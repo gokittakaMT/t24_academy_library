@@ -1,8 +1,10 @@
 .month_change {
-    width: 300px;
+    width:  300px;
     display: flex;
     justify-content: space-between;
 }
+/* 前月 2024年7月 翌月 の箇所でこれだと全体で300pxが設定されている。間にwidthに対して適当なスペースが用意される。
+display: flexは記述された要素が並列になるという便利なスタイル */
 
 .table_wrapper {
     width: 100%;
